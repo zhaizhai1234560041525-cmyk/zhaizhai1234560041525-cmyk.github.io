@@ -1,0 +1,123 @@
+:root {
+  --ikea-blue: #0058AB;
+  --ikea-yellow: #FFDA1A;
+}
+
+.text-ikea-blue { color: var(--ikea-blue); }
+.bg-ikea-blue { background-color: var(--ikea-blue); }
+.border-ikea-blue { border-color: var(--ikea-blue); }
+.bg-ikea-yellow { background-color: var(--ikea-yellow); }
+.text-ikea-yellow { color: var(--ikea-yellow); }
+
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif; }
+
+.ikea-logo {
+  background: var(--ikea-blue);
+  color: var(--ikea-yellow);
+  font-weight: 800;
+  font-size: 18px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  letter-spacing: 1px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.step-item:hover { background: #f3f4f6; }
+.step-item.active { background: #eff6ff; border-left: 3px solid var(--ikea-blue); }
+.step-item.completed .step-num { background: var(--ikea-blue); color: white; }
+.step-item.blocked { opacity: 0.5; cursor: not-allowed; }
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.step-title { font-size: 13px; font-weight: 500; }
+.step-desc { font-size: 11px; color: #9ca3af; }
+
+.media-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.media-card:hover { border-color: var(--ikea-blue); }
+.media-card.selected { border-color: var(--ikea-blue); background: #eff6ff; }
+.media-id { font-weight: 800; color: var(--ikea-blue); font-size: 12px; }
+
+.product-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 100px 100px;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.effect-image {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  max-width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.btn-primary {
+  background: var(--ikea-blue);
+  color: white;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.btn-primary:hover { background: #004a8f; }
+
+.btn-secondary {
+  background: white;
+  color: var(--ikea-blue);
+  border: 1px solid var(--ikea-blue);
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.btn-danger {
+  background: white;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-ready { background: #dcfce7; color: #166534; }
+.status-blocked { background: #fee2e2; color: #991b1b; }
+.status-wait { background: #fef9c3; color: #854d0e; }
+.status-done { background: #dbeafe; color: #1e40af; }

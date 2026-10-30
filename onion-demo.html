@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洋葱学园 · 素材智能生产平台</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #4F6EF7; --primary-light: #EEF2FF;
+            --success: #22C55E; --warning: #F59E0B; --danger: #EF4444;
+            --text-primary: #1F2937; --text-secondary: #6B7280; --text-tertiary: #9CA3AF;
+            --bg-page: #F5F7FA; --border: #E5E7EB; --border-light: #F3F4F6;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06); --radius: 8px; --radius-lg: 12px;
+        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif; background: var(--bg-page); color: var(--text-primary); font-size: 14px; line-height: 1.6; }
+
+        .login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .login-box { width: 400px; background: white; border-radius: 16px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .login-logo { text-align: center; margin-bottom: 32px; }
+        .logo-icon { font-size: 48px; margin-bottom: 8px; }
+        .login-logo h1 { font-size: 22px; margin-bottom: 4px; }
+        .login-logo p { color: var(--text-secondary); font-size: 14px; }
+        .form-item { margin-bottom: 20px; }
+        .form-item label { display: block; margin-bottom: 6px; font-weight: 500; }
+        .form-item input, .form-item select { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; }
+        .btn-primary { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; }
+        .btn-primary:hover { background: #3B5BDB; }
+        .btn-block { width: 100%; padding: 12px; font-size: 15px; }
+        .login-tip { text-align: center; margin-top: 20px; color: var(--text-tertiary); font-size: 12px; }
+
+        .main-app { min-height: 100vh; display: flex; flex-direction: column; }
+        .header { height: 56px; background: white; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 32px; position: sticky; top: 0; z-index: 100; }
+        .header-left { display: flex; align-items: center; gap: 10px; }
+        .logo-mini { font-size: 24px; }
+        .platform-name { font-size: 16px; font-weight: 600; }
+        .env-tag { font-size: 11px; background: #FEF3C7; color: #92400E; padding: 2px 8px; border-radius: 4px; }
+        .header-nav { display: flex; gap: 4px; flex: 1; }
+        .nav-item { padding: 6px 16px; border-radius: var(--radius); color: var(--text-secondary); cursor: pointer; font-size: 14px; }
+        .nav-item:hover { background: var(--bg-page); color: var(--text-primary); }
+        .nav-item.active { background: var(--primary-light); color: var(--primary); font-weight: 500; }
+        .header-right { display: flex; align-items: center; gap: 16px; }
+        .user-info { display: flex; align-items: center; gap: 10px; }
+        .user-role { font-size: 12px; color: var(--primary); background: var(--primary-light); padding: 2px 10px; border-radius: 10px; }
+        .avatar { width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 500; }
+        .main-content { flex: 1; padding: 24px; max-width: 1440px; width: 100%; margin: 0 auto; }
+
+        .card { background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px; }
+        .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .stat-card { background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow); }
+        .stat-label { color: var(--text-secondary); font-size: 13px; }
+        .stat-value { font-size: 28px; font-weight: 700; }
+        .stat-trend { font-size: 12px; }
+        .stat-trend.up { color: var(--success); }
+        .tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+        .tag-blue { background: var(--primary-light); color: var(--primary); }
+        .tag-green { background: #F0FDF4; color: var(--success); }
+        .tag-orange { background: #FFF7ED; color: var(--warning); }
+        .tag-gray { background: #F3F4F6; color: var(--text-secondary); }
+        .btn-secondary { background: white; color: var(--text-primary); border: 1px solid var(--border); padding: 9px 18px; border-radius: var(--radius); font-size: 14px; cursor: pointer; }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+        .btn-sm { padding: 5px 12px; font-size: 12px; }
+
+        .production-layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; min-height: 600px; }
+        .production-sidebar { background: white; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow); }
+        .step-list { display: flex; flex-direction: column; gap: 8px; }
+        .step-item { padding: 14px 16px; border-radius: var(--radius); cursor: pointer; display: flex; align-items: center; gap: 12px; border: 1px solid transparent; }
+        .step-item:hover { background: var(--bg-page); }
+        .step-item.active { background: var(--primary-light); border-color: var(--primary); }
+        .step-item.done .step-num { background: var(--success); color: white; }
+        .step-num { width: 28px; height: 28px; border-radius: 50%; background: var(--border-light); color: var(--text-secondary); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+        .step-item.active .step-num { background: var(--primary); color: white; }
+        .step-name { font-weight: 500; font-size: 14px; }
+        .step-desc { font-size: 12px; color: var(--text-tertiary); }
+        .production-main { background: white; border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow); }
+        .form-group { margin-bottom: 20px; }
+        .form-label { font-weight: 500; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .form-label .required { color: var(--danger); }
+        .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius); font-size: 14px; }
+        .form-textarea { min-height: 80px; resize: vertical; }
+        .channel-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .channel-card { border: 2px solid var(--border); border-radius: var(--radius); padding: 14px; cursor: pointer; text-align: center; }
+        .channel-card:hover { border-color: var(--primary-light); }
+        .channel-card.selected { border-color: var(--primary); background: var(--primary-light); }
+        .channel-icon { font-size: 28px; margin-bottom: 6px; }
+        .channel-name { font-weight: 500; font-size: 13px; }
+        .channel-spec { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+        .style-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .style-tag { padding: 6px 14px; background: var(--bg-page); border: 1px solid var(--border); border-radius: 16px; font-size: 13px; cursor: pointer; }
+        .style-tag:hover { border-color: var(--primary); }
+        .style-tag.selected { background: var(--primary); color: white; border-color: var(--primary); }
+        .style-tag.random { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; }
+        .generate-bar { display: flex; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-light); }
+        .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px; }
+        .result-card { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); position: relative; aspect-ratio: 3/4; background: #F3F4F6; }
+        .result-cover { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 48px; }
+        .result-actions { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.7)); display: flex; gap: 8px; opacity: 0; transition: opacity 0.2s; }
+        .result-card:hover .result-actions { opacity: 1; }
+        .result-btn { flex: 1; padding: 6px; background: rgba(255,255,255,0.9); border: none; border-radius: 4px; font-size: 12px; cursor: pointer; }
+        .generating { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--primary); padding: 40px; }
+        .spinner { width: 20px; height: 20px; border: 2px solid var(--primary-light); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .material-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .material-card { background: white; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; }
+        .material-card:hover { transform: translateY(-2px); }
+        .material-cover { height: 160px; background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%); display: flex; align-items: center; justify-content: center; font-size: 40px; }
+        .material-info { padding: 14px; }
+        .material-title { font-weight: 500; margin-bottom: 6px; font-size: 14px; }
+        .material-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+        .material-stats { display: flex; gap: 16px; color: var(--text-tertiary); font-size: 12px; }
+        .filter-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .filter-item { padding: 8px 16px; background: white; border: 1px solid var(--border); border-radius: 20px; font-size: 13px; cursor: pointer; }
+        .filter-item:hover, .filter-item.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .report-list { display: flex; flex-direction: column; gap: 12px; }
+        .report-item { background: white; border-radius: var(--radius); padding: 16px 20px; display: flex; align-items: center; gap: 16px; box-shadow: var(--shadow); cursor: pointer; }
+        .report-icon { width: 44px; height: 44px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .report-icon.blue { background: var(--primary-light); }
+        .report-icon.green { background: #F0FDF4; }
+        .report-icon.orange { background: #FFF7ED; }
+        .report-body { flex: 1; }
+        .report-name { font-weight: 500; margin-bottom: 2px; }
+        .report-desc { color: var(--text-secondary); font-size: 13px; }
+        .report-side { text-align: right; }
+        .report-time { color: var(--text-tertiary); font-size: 12px; margin-bottom: 4px; }
+
+        .asset-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+        .asset-tab { padding: 10px 20px; cursor: pointer; color: var(--text-secondary); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+        .asset-tab:hover { color: var(--text-primary); }
+        .asset-tab.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 500; }
+        .asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+        .asset-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; }
+        .asset-card:hover { transform: translateY(-2px); }
+        .asset-thumb { height: 120px; background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); display: flex; align-items: center; justify-content: center; font-size: 32px; }
+        .asset-info { padding: 12px; }
+        .asset-name { font-weight: 500; font-size: 13px; margin-bottom: 4px; }
+        .asset-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal { background: white; border-radius: var(--radius-lg); width: 90%; max-width: 720px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+        .modal-header { padding: 20px 24px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: white; z-index: 10; }
+        .modal-title { font-size: 18px; font-weight: 600; }
+        .modal-close { width: 32px; height: 32px; border: none; background: var(--bg-page); border-radius: 50%; cursor: pointer; font-size: 16px; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; }
+        .modal-body { padding: 24px; }
+        .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border-light); display: flex; justify-content: flex-end; gap: 12px; }
+        .material-detail-cover { height: 240px; background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 64px; margin-bottom: 20px; }
+        .detail-row { display: flex; margin-bottom: 14px; }
+        .detail-label { width: 100px; color: var(--text-secondary); flex-shrink: 0; }
+        .detail-value { flex: 1; }
+        .insight-card { background: white; border-left: 3px solid var(--primary); padding: 12px 16px; border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 10px; box-shadow: var(--shadow); }
+        .insight-title { font-weight: 500; margin-bottom: 4px; }
+        .insight-desc { color: var(--text-secondary); font-size: 13px; }
+        .report-section { margin-bottom: 24px; }
+        .report-section h3 { font-size: 15px; font-weight: 600; margin-bottom: 12px; }
+        .report-content { background: #F9FAFB; border-radius: var(--radius); padding: 16px; font-size: 13px; color: var(--text-secondary); line-height: 1.8; white-space: pre-wrap; }
+
+        @media (max-width: 1024px) { .grid-3 { grid-template-columns: repeat(2, 1fr); } .production-layout { grid-template-columns: 1fr; } .channel-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .header-nav { display: none; } .grid-2, .grid-3 { grid-template-columns: 1fr; } .result-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    <div id="login-page" class="login-page">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="logo-icon">🧅</div>
+                <h1>洋葱学园</h1>
+                <p>素材智能生产平台</p>
+            </div>
+            <div class="login-form">
+                <div class="form-item">
+                    <label>账号</label>
+                    <input type="text" placeholder="请输入工号或邮箱">
+                </div>
+                <div class="form-item">
+                    <label>密码</label>
+                    <input type="password" placeholder="请输入密码">
+                </div>
+                <div class="form-item">
+                    <label>登录角色（演示用）</label>
+                    <select id="login-role">
+                        <option value="tl">总负责人（TL）</option>
+                        <option value="content">内容策略团队</option>
+                        <option value="app">APP 投放团队</option>
+                        <option value="lead">线索投放团队</option>
+                        <option value="ai">AI 增长团队</option>
+                    </select>
+                </div>
+                <button class="btn-primary btn-block" onclick="login()">登 录</button>
+            </div>
+            <div class="login-tip">演示环境 · 任意账号可登录</div>
+        </div>
+    </div>
+
+    <div id="main-app" class="main-app" style="display:none;">
+        <header class="header">
+            <div class="header-left">
+                <div class="logo-mini">🧅</div>
+                <span class="platform-name">素材智能生产平台</span>
+                <span class="env-tag">内部系统</span>
+            </div>
+            <nav class="header-nav">
+                <span class="nav-item active" data-module="dashboard" data-roles="tl,ai" onclick="switchModule('dashboard')">数据看板</span>
+                <span class="nav-item" data-module="intelligence" data-roles="tl,content,ai" onclick="switchModule('intelligence')">情报中心</span>
+                <span class="nav-item" data-module="strategy" data-roles="tl,content,ai" onclick="switchModule('strategy')">策略中心</span>
+                <span class="nav-item" data-module="production" data-roles="tl,app,lead,ai" onclick="switchModule('production')">生产中心</span>
+                <span class="nav-item" data-module="assets" data-roles="tl,app,lead,ai" onclick="switchModule('assets')">资产中心</span>
+            </nav>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="user-role" id="current-role-tag">AI 增长团队</span>
+                    <span>张同学</span>
+                    <div class="avatar">张</div>
+                </div>
+            </div>
+        </header>
+        <main class="main-content" id="main-content"></main>
+    </div>
+
+    <script>
+        // 数据
+        const ROLES = { tl: '总负责人', content: '内容策略团队', app: 'APP 投放团队', lead: '线索投放团队', ai: 'AI 增长团队' };
+
+        const INTELLIGENCE_DATA = [
+            { id: 1, type: 'video', title: '作业帮 - 期末冲刺口播', platform: '腾讯广告', industry: '教育', style: '口播', hook: '痛点直击', exposure: '2.4M', ctr: '4.2%', likes: 8900, analysis: { hook: '前3秒：孩子皱眉写作业特写 + "期末又考砸了？" 情绪化提问', structure: '痛点场景 → 产品功能展示 → 效果对比 → 行动号召', script: '你家孩子是不是一到期末就焦虑？作业写到半夜还写不完...', tags: ['口播', '痛点直击', '期末', 'K12'] } },
+            { id: 2, type: 'video', title: '猿辅导 - AI 老师互动', platform: '抖音', industry: '教育', style: '剧情', hook: '悬念反转', exposure: '5.1M', ctr: '3.8%', likes: 15200, analysis: { hook: '前3秒：学生偷偷用手机，家长突然出现', structure: '冲突场景 → 反转（原来在学习）→ 产品展示 → 家长认可', script: '偷偷玩手机被妈妈发现，结果...', tags: ['剧情', '悬念', 'AI功能', '反转'] } },
+            { id: 3, type: 'image', title: '斑马 - 9.9元课海报', platform: '小红书', industry: '教育', style: '图文', hook: '价格锚点', exposure: '890K', ctr: '5.1%', likes: 3200, analysis: { hook: '主标题：9.9元 = 1节直播课 + 全套资料', structure: '价格锚定 → 价值堆叠 → 限时紧迫 → 信任背书', copy: '9.9元抢原价199元课程，仅限前100名', tags: ['图文', '促销', '价格锚点', '小红书风格'] } },
+            { id: 4, type: 'video', title: '疯狂水世界 - 唱歌钩子', platform: '抖音', industry: '游戏', style: '混剪', hook: '音乐钩子', exposure: '12.5M', ctr: '6.3%', likes: 45000, analysis: { hook: '前3秒：魔性唱歌 + 游戏画面混剪', structure: '音乐钩子 → 玩法展示 → 爽点密集 → 下载引导', script: '（唱歌）水世界大冒险，快来一起玩...', tags: ['混剪', '音乐钩子', '游戏', '爆款'] } },
+            { id: 5, type: 'image', title: '新东方 - 备考资料九宫格', platform: '朋友圈', industry: '教育', style: '图文', hook: '资料诱惑', exposure: '1.2M', ctr: '3.2%', likes: 5600, analysis: { hook: '主标题：免费领取中考押题卷', structure: '资料诱惑 → 权威背书 → 领取路径 → 紧迫感', copy: '中考命题组老师整理，错过再等一年', tags: ['九宫格', '资料', '朋友圈', '中考'] } },
+            { id: 6, type: 'video', title: '高途 - 家长 testimonial', platform: '腾讯广告', industry: '教育', style: '口播', hook: '真实见证', exposure: '3.3M', ctr: '2.9%', likes: 6700, analysis: { hook: '前3秒：家长出镜 "我真的感谢这个课"', structure: '见证开场 → 孩子问题 → 课程解决 → 效果展示', script: '我家孩子以前数学不及格，现在...', tags: ['口播', '见证', '家长', '效果'] } },
+            { id: 7, type: 'image', title: '学而思 - 暑假班倒计时', platform: '华为商店', industry: '教育', style: '图文', hook: '紧迫感', exposure: '680K', ctr: '4.5%', likes: 2100, analysis: { hook: '主标题：暑假班最后3天，报满即止', structure: '倒计时紧迫 → 课程价值 → 名师背书 → 立即报名', copy: '最后3天！清华北大名师亲授', tags: ['倒计时', '紧迫感', '商店', '暑假'] } },
+            { id: 8, type: 'video', title: '洋葱竞品 - 拍题功能演示', platform: '抖音', industry: '教育', style: '录屏', hook: '功能演示', exposure: '1.8M', ctr: '3.5%', likes: 4800, analysis: { hook: '前3秒：手机录屏拍题瞬间出答案', structure: '功能演示 → 使用场景 → 效果对比 → 下载引导', script: '拍照就能出解析，这也太方便了', tags: ['录屏', '功能演示', '拍题', 'AI'] } }
+        ];
+
+        const STRATEGY_REPORTS = [
+            { id: 1, type: 'demand', name: '需求报告 - 第14期', desc: '购买动因 + 信息屋分析', period: '2026.10.11 - 10.24', status: 'pending', createTime: '2026-10-11 09:30', content: { purchaseDrivers: '【购买动因分析】\n目标人群：期末备考期的初三学生家长（核心）+ 初二预习人群（辅助）\n\n核心痛点：\n1. 孩子数学/物理成绩下滑，家长焦虑但辅导不了\n2. 期末时间紧，需要短期快速提分方案\n3. 担心孩子沉迷手机，希望学习工具能管控\n\n购买触发点：\n- 看到"期末冲刺"相关素材时决策最快\n- 对"AI 拍题精学"功能认知度提升 40%\n- 9.9 元低价课仍是最大转化钩子', infoHouse: '【信息屋架构】\n\n屋顶（核心承诺）：14 天期末冲刺，成绩看得见\n\n支柱一（产品功能）：\n- 拍题精学：拍照出解析 + 同类题推荐\n- 智能推题：基于错题自动生成练习\n- 学情报告：家长可随时查看进度\n\n支柱二（信任背书）：\n- 2000 万学生家长的选择\n- 特级教师团队把关\n- 无效退款承诺\n\n地基（行动号召）：\n- 9.9 元体验课，限时 3 天\n- 扫码下载 App，立减 20 元', insights: '【数据洞察】\n- 上期"痛点直击"类素材 CTR 最高（4.2%），建议本期加大投放\n- "唱歌钩子"形式在游戏行业验证有效，可尝试迁移到教育场景\n- 家长 testimonial 视频转化率稳定，建议保持 20% 占比\n- 期末倒计时类素材成本上涨 15%，需控制预算' } },
+            { id: 2, type: 'creative', name: '创意报告 - 第14期', desc: '外部创意趋势 + 内部表现分析', period: '2026.10.11 - 10.24', status: 'approved', createTime: '2026-10-10 16:20', content: { externalTrends: '【外部创意趋势】\n\n高表现创意类型 TOP3：\n1. 音乐钩子 + 混剪（游戏行业验证，曝光 12M+）\n2. 悬念反转剧情（教育行业，CTR 3.8%）\n3. 价格锚点图文（K12 低价课，CTR 5.1%）\n\n新兴形式：\n- AI 数字人口播（成本下降，可测试）\n- 互动式广告（用户选择剧情分支）\n- UGC 风格素材（真实感强）', internalAnalysis: '【内部素材表现】\n\n上期高表现素材特征：\n- 视频前3秒有明确痛点提问的素材，完播率高 35%\n- 带有"期末"时间节点的素材，转化率提升 22%\n- 口播 + 字幕花字组合，成本最低\n\n待优化方向：\n- 图片素材多样性不足，风格重复度高\n- 混剪视频开头钩子单一，需增加音乐类钩子\n- 小红书图文素材占比偏低', recommendations: '【本期建议】\n\n1. 视频类（60% 预算）：\n   - 口播痛点类 30%（验证稳定）\n   - 剧情反转类 20%（新增测试）\n   - 音乐钩子混剪 10%（创新尝试）\n\n2. 图片类（30% 预算）：\n   - 价格锚点海报 15%\n   - 资料诱惑九宫格 10%\n   - 功能展示图 5%\n\n3. 图文类（10% 预算）：\n   - 小红书种草文案 + 封面' } },
+            { id: 3, type: 'special', name: '拍题精学专项方向卡', desc: 'AI 功能主推专项策略', period: '长期有效', status: 'approved', createTime: '2026-10-08 11:00', content: { positioning: '【功能定位】\n拍题精学 = AI 拍照搜题 + 个性化学习路径\n\n核心差异化：\n- 不是简单给答案，而是"精学"（举一反三）\n- 自动识别知识点薄弱项\n- 生成专属练习计划', targetScenes: '【目标场景】\n\n场景一：作业辅导\n- 痛点：家长不会教 / 没时间教\n- 素材方向：孩子独立完成作业，家长轻松旁观\n\n场景二：考前复习\n- 痛点：不知道哪里薄弱\n- 素材方向：拍题后自动生成错题本，针对性练习\n\n场景三：假期预习\n- 痛点：新学期跟不上\n- 素材方向：提前拍下学期题目，AI 引导预习', creativeDirections: '【创意方向】\n\n方向一：对比类\n- 传统搜题 vs 拍题精学（只给答案 vs 学会一类题）\n\n方向二：见证类\n- 学生/家长真实使用反馈\n\n方向三：功能演示类\n- 录屏展示拍题 → 解析 → 同类题 → 学情报告全流程\n\n方向四：情感类\n- 孩子从"我不会"到"我懂了"的转变' } }
+        ];
+
+        const PRODUCTION_CONFIG = {
+            channels: [
+                { id: 'tencent_feed', name: '腾讯信息流', icon: '💬', spec: '1080×1920 / 720×1280', rules: ['禁止出现手机设备标识', 'Logo 需置于安全区', '文字占比 ≤ 30%'] },
+                { id: 'huawei_store', name: '华为商店', icon: '📱', spec: '1080×1920 / 800×450', rules: ['禁止出现竞品 Logo', '需包含应用截图', '标题 ≤ 12 字'] },
+                { id: 'douyin_feed', name: '抖音信息流', icon: '🎵', spec: '1080×1920', rules: ['前 3 秒需有钩子', '字幕字号 ≥ 40px', '禁止诱导性文案'] },
+                { id: 'xiaohongshu', name: '小红书', icon: '📕', spec: '1080×1440 / 1080×1080', rules: ['封面需有主标题', '避免硬广感', '标签 3-5 个'] },
+                { id: 'oppo_store', name: 'OPPO 商店', icon: '⚡', spec: '1080×1920', rules: ['禁止出现 iPhone 标识', '需包含下载按钮', '描述 ≤ 80 字'] },
+                { id: 'moments', name: '朋友圈', icon: '⭕', spec: '1080×1080 九宫格', rules: ['首图需吸睛', '文案 ≤ 6 行', '避免敏感词'] }
+            ],
+            styles: ['皮克斯 3D', '水墨国风', '扁平插画', '真实摄影', '赛博朋克', '手绘涂鸦', '极简白底', '复古胶片', '吉卜力', '像素风'],
+            scenarios: ['作业辅导', '期末冲刺', '假期预习', '错题整理', '知识点突破', '家长监督'],
+            audiences: ['小学家长', '初中家长', '高中家长', '学生本人', '初三冲刺', '高三冲刺'],
+            copyTemplates: [
+                { id: 1, name: '痛点直击', template: '孩子{痛点}，家长{情绪}？{产品}来帮忙！' },
+                { id: 2, name: '效果承诺', template: '14 天{场景}，成绩提升看得见！' },
+                { id: 3, name: '价格锚点', template: '9.9 元 = {价值}，仅限前 100 名！' },
+                { id: 4, name: '社会认同', template: '2000 万家长的选择，{人群}都在用！' },
+                { id: 5, name: '紧迫感', template: '最后 {天数} 天！{行动}立减 {金额} 元！' }
+            ]
+        };
+
+        const ASSET_DATA = {
+            video: [
+                { id: 1, name: '口播-男老师-痛点讲解', duration: '00:15', tags: ['口播', '男', '痛点'], type: '口播主轴' },
+                { id: 2, name: '空镜-学生皱眉写作业', duration: '00:03', tags: ['空镜', '痛点', '学生'], type: '痛点空镜' },
+                { id: 3, name: 'AI生成-拍题界面演示', duration: '00:04', tags: ['AI生成', '功能', '录屏'], type: '功能展示' },
+                { id: 4, name: '口播-女家长-见证', duration: '00:12', tags: ['口播', '家长', '见证'], type: '口播主轴' },
+                { id: 5, name: '空镜-教室全景', duration: '00:02', tags: ['空镜', '场景'], type: '环境空镜' },
+                { id: 6, name: 'AI生成-提分动画', duration: '00:03', tags: ['AI生成', '动画', '效果'], type: '效果展示' }
+            ],
+            image: [
+                { id: 1, name: '期末冲刺-价格锚点', tags: ['价格', '期末', '海报'], style: '扁平插画' },
+                { id: 2, name: '拍题功能-界面展示', tags: ['功能', 'App', '截图'], style: '真实摄影' },
+                { id: 3, name: '9.9元课-限时促销', tags: ['促销', '低价', '九宫格'], style: '极简白底' },
+                { id: 4, name: 'AI老师-卡通形象', tags: ['IP', '卡通', '品牌'], style: '皮克斯 3D' }
+            ],
+            brand: [
+                { id: 1, name: '洋葱学园 Logo', type: 'logo', format: 'SVG/PNG' },
+                { id: 2, name: '洋葱 IP 形象-葱宝', type: 'ip', format: 'PNG 序列帧' },
+                { id: 3, name: '品牌色板', type: 'color', format: 'HEX/RGB' },
+                { id: 4, name: '标准字体', type: 'font', format: 'OTF/TTF' }
+            ],
+            template: [
+                { id: 1, name: '腾讯信息流-竖版视频框', channel: '腾讯', usage: 156 },
+                { id: 2, name: '小红书-3:4 封面', channel: '小红书', usage: 89 },
+                { id: 3, name: '华为商店-详情页头图', channel: '华为', usage: 67 },
+                { id: 4, name: '抖音-9:16 全屏', channel: '抖音', usage: 234 }
+            ]
+        };
+
+        const DASHBOARD_DATA = {
+            stats: [
+                { label: '本期生成素材', value: '1,247', trend: '+23%', up: true },
+                { label: '素材通过率', value: '87.3%', trend: '+2.1%', up: true },
+                { label: '投放转化率', value: '4.2%', trend: '+0.5%', up: true },
+                { label: '单素材成本', value: '¥0.18', trend: '-12%', up: true },
+                { label: '模型调用费用', value: '¥2,340', trend: '+8%', up: false },
+                { label: '情报库素材量', value: '3,456', trend: '+156', up: true }
+            ],
+            channelPerformance: [
+                { channel: '腾讯信息流', ctr: 4.2, cost: 0.15, volume: 456 },
+                { channel: '抖音', ctr: 3.8, cost: 0.22, volume: 389 },
+                { channel: '华为商店', ctr: 2.9, cost: 0.12, volume: 234 },
+                { channel: '小红书', ctr: 5.1, cost: 0.28, volume: 168 },
+                { channel: 'OPPO', ctr: 3.1, cost: 0.14, volume: 145 }
+            ],
+            recentActivities: [
+                { time: '10:23', user: '内容-王策略', action: '审核通过', target: '需求报告-第14期' },
+                { time: '09:45', user: 'APP-李投放', action: '生成素材', target: '腾讯信息流 × 12 张' },
+                { time: '09:12', user: '线索-张线索', action: '审核通过', target: '混剪视频 × 3 条' },
+                { time: '08:56', user: 'AI-张同学', action: '更新 Skill', target: '图片生成-华为渠道规则' },
+                { time: '08:30', user: '系统', action: '自动采集', target: '腾讯妙思 TOP 200 素材' }
+            ]
+        };
+
+        const GENERATED_RESULTS = [
+            { id: 1, style: '皮克斯 3D', emoji: '🎨', copy: '期末冲刺，14 天提分看得见' },
+            { id: 2, style: '扁平插画', emoji: '📚', copy: '9.9 元抢原价 199 元课程' },
+            { id: 3, style: '真实摄影', emoji: '📷', copy: '2000 万家长的选择' },
+            { id: 4, style: '水墨国风', emoji: '🖌️', copy: 'AI 拍题精学，举一反三' },
+            { id: 5, style: '极简白底', emoji: '⚪', copy: '最后 3 天，报满即止' },
+            { id: 6, style: '吉卜力', emoji: '🌿', copy: '孩子从"我不会"到"我懂了"' }
+        ];
+
+        // 全局状态
+        let currentRole = 'ai';
+        let currentModule = 'dashboard';
+        let productionStep = 1;
+        let productionConfig = { channel: '', style: [], scenario: '', audience: '', copyTemplate: 1, copyText: '', quantity: 6 };
+        let generationResults = [];
+        let intelligenceFilter = 'all';
+        let assetTab = 'video';
+
+        // 登录
+        function login() {
+            const roleSelect = document.getElementById('login-role');
+            currentRole = roleSelect.value;
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('main-app').style.display = 'flex';
+            document.getElementById('current-role-tag').textContent = ROLES[currentRole];
+            filterNavByRole();
+            const firstNav = document.querySelector('.nav-item:not([style*="none"])');
+            if (firstNav) switchModule(firstNav.dataset.module);
+        }
+
+        function filterNavByRole() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                const roles = item.dataset.roles.split(',');
+                item.style.display = roles.includes(currentRole) ? '' : 'none';
+            });
+        }
+
+        // 模块切换
+        function switchModule(module) {
+            currentModule = module;
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.module === module);
+            });
+            const content = document.getElementById('main-content');
+            content.innerHTML = '';
+            switch(module) {
+                case 'dashboard': renderDashboard(); break;
+                case 'intelligence': renderIntelligence(); break;
+                case 'strategy': renderStrategy(); break;
+                case 'production': renderProduction(); break;
+                case 'assets': renderAssets(); break;
+            }
+        }
+
+        // 数据看板
+        function renderDashboard() {
+            const content = document.getElementById('main-content');
+            content.innerHTML = `
+                <div style="margin-bottom:24px;">
+                    <div style="font-size:22px;font-weight:600;margin-bottom:4px;">数据看板</div>
+                    <div style="color:var(--text-secondary);font-size:14px;">实时掌握素材生产与投放效果 · 数据更新于 2026-10-11 10:30</div>
+                </div>
+                <div class="grid-3" style="margin-bottom:20px;">
+                    ${DASHBOARD_DATA.stats.map(s => `
+                        <div class="stat-card">
+                            <div class="stat-label">${s.label}</div>
+                            <div class="stat-value">${s.value}</div>
+                            <div class="stat-trend ${s.up ? 'up' : ''}">${s.up ? '↑' : '↓'} ${s.trend} 较上期</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title">渠道效果对比</div>
+                        <div style="height:200px;background:linear-gradient(180deg,#F8FAFC,#F1F5F9);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-tertiary);border:1px dashed var(--border);margin-bottom:16px;">
+                            <div style="text-align:center;">
+                                <div style="font-size:32px;margin-bottom:8px;">📊</div>
+                                <div>CTR vs 成本 散点图</div>
+                            </div>
+                        </div>
+                        ${DASHBOARD_DATA.channelPerformance.map(c => `
+                            <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-light);font-size:13px;">
+                                <span>${c.channel}</span>
+                                <span style="color:var(--text-secondary);">CTR ${c.ctr}% · ¥${c.cost} · ${c.volume} 条</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="card">
+                        <div class="card-title">最近动态</div>
+                        ${DASHBOARD_DATA.recentActivities.map(a => `
+                            <div style="display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border-light);font-size:13px;">
+                                <div style="color:var(--text-tertiary);width:50px;">${a.time}</div>
+                                <div><strong>${a.user}</strong> <span style="color:var(--text-secondary);">${a.action}</span> ${a.target}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 情报中心
+        function renderIntelligence() {
+            const content = document.getElementById('main-content');
+            const filters = [{ id: 'all', name: '全部' }, { id: 'video', name: '视频' }, { id: 'image', name: '图片' }, { id: 'high', name: '高表现' }, { id: 'edu', name: '教育行业' }];
+            let data = INTELLIGENCE_DATA;
+            if (intelligenceFilter === 'video') data = data.filter(d => d.type === 'video');
+            if (intelligenceFilter === 'image') data = data.filter(d => d.type === 'image');
+            if (intelligenceFilter === 'high') data = data.filter(d => parseFloat(d.ctr) > 4);
+            if (intelligenceFilter === 'edu') data = data.filter(d => d.industry === '教育');
+
+            content.innerHTML = `
+                <div style="margin-bottom:24px;">
+                    <div style="font-size:22px;font-weight:600;margin-bottom:4px;">情报中心</div>
+                    <div style="color:var(--text-secondary);font-size:14px;">自动采集腾讯妙思、抖音、小红书等平台高表现素材 · AI 预分析创意结构</div>
+                </div>
+                <div class="filter-bar">
+                    ${filters.map(f => `<div class="filter-item ${intelligenceFilter === f.id ? 'active' : ''}" onclick="intelligenceFilter='${f.id}';renderIntelligence()">${f.name}</div>`).join('')}
+                </div>
+                <div class="material-grid">
+                    ${data.map(item => `
+                        <div class="material-card" onclick="showMaterialDetail(${item.id})">
+                            <div class="material-cover">${item.type === 'video' ? '🎬' : '🖼️'}</div>
+                            <div class="material-info">
+                                <div class="material-title">${item.title}</div>
+                                <div class="material-meta">
+                                    <span class="tag tag-blue">${item.platform}</span>
+                                    <span class="tag tag-gray">${item.style}</span>
+                                    <span class="tag tag-orange">${item.hook}</span>
+                                </div>
+                                <div class="material-stats">
+                                    <span>👁 ${item.exposure}</span>
+                                    <span>📈 CTR ${item.ctr}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function showMaterialDetail(id) {
+            const item = INTELLIGENCE_DATA.find(d => d.id === id);
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <div class="modal-title">${item.title}</div>
+                        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="material-detail-cover">${item.type === 'video' ? '🎬' : '🖼️'}</div>
+                        <div class="detail-row"><div class="detail-label">平台</div><div class="detail-value">${item.platform} · ${item.industry}</div></div>
+                        <div class="detail-row"><div class="detail-label">表现数据</div><div class="detail-value">曝光 ${item.exposure} · CTR ${item.ctr} · 点赞 ${item.likes}</div></div>
+                        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border-light);">
+                            <h4 style="margin-bottom:12px;">AI 结构分析</h4>
+                            <div class="insight-card"><div class="insight-title">🎯 前 3 秒钩子</div><div class="insight-desc">${item.analysis.hook}</div></div>
+                            <div class="insight-card"><div class="insight-title">📐 内容结构</div><div class="insight-desc">${item.analysis.structure}</div></div>
+                            <div class="insight-card"><div class="insight-title">📝 ${item.type === 'video' ? '口播脚本' : '文案'}</div><div class="insight-desc">${item.analysis.script || item.analysis.copy}</div></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+                        <button class="btn-primary" onclick="alert('演示：复刻创意')">复刻创意</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // 策略中心
+        function renderStrategy() {
+            const content = document.getElementById('main-content');
+            const typeIcons = { demand: '📋', creative: '💡', special: '🎯' };
+            const typeColors = { demand: 'blue', creative: 'green', special: 'orange' };
+            const statusNames = { pending: '待审核', approved: '已通过', rejected: '已驳回' };
+            const statusTags = { pending: 'tag-orange', approved: 'tag-green', rejected: 'tag-red' };
+
+            content.innerHTML = `
+                <div style="margin-bottom:24px;">
+                    <div style="font-size:22px;font-weight:600;margin-bottom:4px;">策略中心</div>
+                    <div style="color:var(--text-secondary);font-size:14px;">AI 基于内外部数据自动生成策略报告 · 内容负责人审核后分发下游</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+                    <div class="filter-bar" style="margin-bottom:0;">
+                        <div class="filter-item active">全部报告</div>
+                        <div class="filter-item">待审核</div>
+                        <div class="filter-item">已通过</div>
+                    </div>
+                    <button class="btn-primary" onclick="alert('演示：AI 生成新一期报告')">✨ 生成新报告</button>
+                </div>
+                <div class="report-list">
+                    ${STRATEGY_REPORTS.map(r => `
+                        <div class="report-item" onclick="showReportDetail(${r.id})">
+                            <div class="report-icon ${typeColors[r.type]}">${typeIcons[r.type]}</div>
+                            <div class="report-body">
+                                <div class="report-name">${r.name}</div>
+                                <div class="report-desc">${r.desc} · ${r.period}</div>
+                            </div>
+                            <div class="report-side">
+                                <div class="report-time">${r.createTime}</div>
+                                <span class="tag ${statusTags[r.status]}">${statusNames[r.status]}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function showReportDetail(id) {
+            const report = STRATEGY_REPORTS.find(r => r.id === id);
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay';
+            let contentHtml = '';
+            if (report.type === 'demand') {
+                contentHtml = `<div class="report-section"><h3>🎯 购买动因</h3><div class="report-content">${report.content.purchaseDrivers}</div></div>
+                    <div class="report-section"><h3>🏠 信息屋</h3><div class="report-content">${report.content.infoHouse}</div></div>
+                    <div class="report-section"><h3>📊 数据洞察</h3><div class="report-content">${report.content.insights}</div></div>`;
+            } else if (report.type === 'creative') {
+                contentHtml = `<div class="report-section"><h3>🌐 外部创意趋势</h3><div class="report-content">${report.content.externalTrends}</div></div>
+                    <div class="report-section"><h3>📈 内部素材表现</h3><div class="report-content">${report.content.internalAnalysis}</div></div>
+                    <div class="report-section"><h3>💡 本期建议</h3><div class="report-content">${report.content.recommendations}</div></div>`;
+            } else {
+                contentHtml = `<div class="report-section"><h3>📍 功能定位</h3><div class="report-content">${report.content.positioning}</div></div>
+                    <div class="report-section"><h3>🎬 目标场景</h3><div class="report-content">${report.content.targetScenes}</div></div>
+                    <div class="report-section"><h3>🎨 创意方向</h3><div class="report-content">${report.content.creativeDirections}</div></div>`;
+            }
+
+            modal.innerHTML = `
+                <div class="modal">
+                    <div class="modal-header">
+                        <div>
+                            <div class="modal-title">${report.name}</div>
+                            <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;">${report.desc} · ${report.period}</div>
+                        </div>
+                        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
+                    </div>
+                    <div class="modal-body">${contentHtml}</div>
+                    <div class="modal-footer">
+                        <button class="btn-secondary" onclick="this.closest('.modal-overlay').remove()">关闭</button>
+                        ${report.status === 'pending' ? '<button class="btn-primary" onclick="alert(\'演示：审核通过\')">✓ 审核通过</button>' : ''}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        // 生产中心
+        function renderProduction() {
+            const content = document.getElementById('main-content');
+            const steps = [
+                { num: 1, name: '选择渠道', desc: '确定投放平台与规格' },
+                { num: 2, name: '配置策略', desc: '人群、场景、风格' },
+                { num: 3, name: '文案生成', desc: 'AI 生成主副标题' },
+                { num: 4, name: '生成素材', desc: '批量产出图片/视频' },
+                { num: 5, name: '审核投放', desc: '业务审核后交付' }
+            ];
+
+            content.innerHTML = `
+                <div style="margin-bottom:24px;">
+                    <div style="font-size:22px;font-weight:600;margin-bottom:4px;">生产中心</div>
+                    <div style="color:var(--text-secondary);font-size:14px;">选择策略 → 配置规则 → AI 批量生成 → 审核交付</div>
+                </div>
+                <div class="production-layout">
+                    <div class="production-sidebar">
+                        <div class="card-title" style="margin-bottom:12px;">生产流程</div>
+                        <div class="step-list">
+                            ${steps.map(s => `
+                                <div class="step-item ${productionStep === s.num ? 'active' : ''} ${productionStep > s.num ? 'done' : ''}" onclick="productionStep=${s.num};renderProduction()">
+                                    <div class="step-num">${productionStep > s.num ? '✓' : s.num}</div>
+                                    <div>
+                                        <div class="step-name">${s.name}</div>
+                                        <div class="step-desc">${s.desc}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border-light);font-size:13px;">
+                            <div style="color:var(--text-tertiary);margin-bottom:8px;font-size:12px;">当前配置</div>
+                            <div>渠道：${productionConfig.channel ? PRODUCTION_CONFIG.channels.find(c=>c.id===productionConfig.channel)?.name : '<span style="color:var(--text-tertiary)">未选择</span>'}</div>
+                            <div>风格：${productionConfig.style.length > 0 ? productionConfig.style.join('、') : '<span style="color:var(--text-tertiary)">未选择</span>'}</div>
+                            <div>数量：${productionConfig.quantity} 张</div>
+                        </div>
+                    </div>
+                    <div class="production-main">${getStepContent()}</div>
+                </div>
+            `;
+        }
+
+        function getStepContent() {
+            switch(productionStep) {
+                case 1: return renderStepChannel();
+                case 2: return renderStepConfig();
+                case 3: return renderStepCopy();
+                case 4: return renderStepGenerate();
+                case 5: return renderStepAudit();
+                default: return '';
+            }
+        }
+
+        function renderStepChannel() {
+            return `
+                <div class="card-title">选择投放渠道</div>
+                <p style="color:var(--text-secondary);margin-bottom:20px;font-size:13px;">不同渠道有各自的尺寸规范与审核规则，系统将自动适配</p>
+                <div class="channel-grid">
+                    ${PRODUCTION_CONFIG.channels.map(ch => `
+                        <div class="channel-card ${productionConfig.channel === ch.id ? 'selected' : ''}" onclick="productionConfig.channel='${ch.id}';renderProduction()">
+                            <div class="channel-icon">${ch.icon}</div>
+                            <div class="channel-name">${ch.name}</div>
+                            <div class="channel-spec">${ch.spec}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${productionConfig.channel ? `
+                    <div style="margin-top:20px;padding:16px;background:#F9FAFB;border-radius:8px;">
+                        <div style="font-weight:500;margin-bottom:10px;font-size:14px;">📋 渠道规则（自动加载）</div>
+                        ${PRODUCTION_CONFIG.channels.find(c=>c.id===productionConfig.channel).rules.map(r => `
+                            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;color:var(--text-secondary);font-size:13px;">
+                                <span style="color:var(--warning);">⚠️</span> ${r}
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+                <div class="generate-bar">
+                    <button class="btn-primary" style="margin-left:auto;" onclick="productionStep=2;renderProduction()" ${!productionConfig.channel ? 'disabled style="opacity:0.5"' : ''}>下一步：配置策略 →</button>
+                </div>
+            `;
+        }
+
+        function renderStepConfig() {
+            return `
+                <div class="card-title">配置生成策略</div>
+                <div class="form-group">
+                    <div class="form-label">目标人群 <span class="required">*</span></div>
+                    <div class="style-tags">
+                        ${PRODUCTION_CONFIG.audiences.map(a => `<div class="style-tag ${productionConfig.audience === a ? 'selected' : ''}" onclick="productionConfig.audience='${a}';renderProduction()">${a}</div>`).join('')}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">使用场景 <span class="required">*</span></div>
+                    <div class="style-tags">
+                        ${PRODUCTION_CONFIG.scenarios.map(s => `<div class="style-tag ${productionConfig.scenario === s ? 'selected' : ''}" onclick="productionConfig.scenario='${s}';renderProduction()">${s}</div>`).join('')}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">视觉风格 <span class="required">*</span></div>
+                    <div class="style-tags">
+                        <div class="style-tag random ${productionConfig.style.includes('random') ? 'selected' : ''}" onclick="productionConfig.style=['random'];renderProduction()">🎲 随机组合</div>
+                        ${PRODUCTION_CONFIG.styles.map(s => `<div class="style-tag ${productionConfig.style.includes(s) ? 'selected' : ''}" onclick="toggleStyle('${s}')">${s}</div>`).join('')}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">生成数量</div>
+                    <select class="form-select" style="width:200px;" onchange="productionConfig.quantity=parseInt(this.value)">
+                        <option value="4">4 张</option>
+                        <option value="6" selected>6 张</option>
+                        <option value="10">10 张</option>
+                        <option value="20">20 张</option>
+                    </select>
+                </div>
+                <div class="generate-bar">
+                    <button class="btn-secondary" onclick="productionStep=1;renderProduction()">← 上一步</button>
+                    <button class="btn-primary" style="margin-left:auto;" onclick="productionStep=3;renderProduction()" ${!productionConfig.audience || !productionConfig.scenario || productionConfig.style.length === 0 ? 'disabled style="opacity:0.5"' : ''}>下一步：生成文案 →</button>
+                </div>
+            `;
+        }
+
+        function toggleStyle(s) {
+            const idx = productionConfig.style.indexOf(s);
+            if (idx > -1) productionConfig.style.splice(idx, 1);
+            else productionConfig.style.push(s);
+            renderProduction();
+        }
+
+        function renderStepCopy() {
+            const tpl = PRODUCTION_CONFIG.copyTemplates.find(t => t.id === productionConfig.copyTemplate);
+            let preview = tpl.template.replace('{痛点}', '数学成绩下滑').replace('{情绪}', '焦虑').replace('{产品}', '洋葱学园').replace('{场景}', '期末冲刺').replace('{价值}', '1节直播课+全套资料').replace('{人群}', '初三家长').replace('{天数}', '3').replace('{行动}', '报名').replace('{金额}', '20');
+
+            return `
+                <div class="card-title">AI 文案生成</div>
+                <p style="color:var(--text-secondary);margin-bottom:20px;font-size:13px;">基于已确认的策略报告（第14期），AI 自动生成符合业务逻辑的文案</p>
+                <div class="form-group">
+                    <div class="form-label">文案策略模板</div>
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+                        ${PRODUCTION_CONFIG.copyTemplates.map(t => `
+                            <label style="display:flex;align-items:center;gap:10px;padding:12px;border:1px solid ${productionConfig.copyTemplate===t.id?'var(--primary)':'var(--border)'};border-radius:8px;cursor:pointer;background:${productionConfig.copyTemplate===t.id?'var(--primary-light)':'white'};">
+                                <input type="radio" name="copyTpl" ${productionConfig.copyTemplate===t.id?'checked':''} onchange="productionConfig.copyTemplate=${t.id};renderProduction()">
+                                <div>
+                                    <div style="font-weight:500;">${t.name}</div>
+                                    <div style="font-size:12px;color:var(--text-secondary);">${t.template}</div>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label">生成文案预览（可编辑）</div>
+                    <textarea class="form-textarea" id="copy-text" rows="3">${productionConfig.copyText || preview}</textarea>
+                </div>
+                <div class="generate-bar">
+                    <button class="btn-secondary" onclick="productionStep=2;renderProduction()">← 上一步</button>
+                    <button class="btn-primary" style="margin-left:auto;" onclick="productionConfig.copyText=document.getElementById('copy-text').value;productionStep=4;renderProduction()">下一步：生成素材 →</button>
+                </div>
+            `;
+        }
+
+        function renderStepGenerate() {
+            return `
+                <div class="card-title">生成素材</div>
+                <p style="color:var(--text-secondary);margin-bottom:20px;font-size:13px;">确认配置后，AI 将批量生成 ${productionConfig.quantity} 张素材</p>
+                <div style="background:#F9FAFB;border-radius:8px;padding:16px;margin-bottom:20px;font-size:13px;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                        <div><span style="color:var(--text-tertiary);">渠道：</span>${PRODUCTION_CONFIG.channels.find(c=>c.id===productionConfig.channel)?.name}</div>
+                        <div><span style="color:var(--text-tertiary);">人群：</span>${productionConfig.audience}</div>
+                        <div><span style="color:var(--text-tertiary);">场景：</span>${productionConfig.scenario}</div>
+                        <div><span style="color:var(--text-tertiary);">风格：</span>${productionConfig.style.join('、')}</div>
+                        <div><span style="color:var(--text-tertiary);">数量：</span>${productionConfig.quantity} 张</div>
+                        <div><span style="color:var(--text-tertiary);">文案：</span>${productionConfig.copyText.substring(0, 30)}...</div>
+                    </div>
+                </div>
+                <div id="generate-status">
+                    <button class="btn-primary btn-block" style="padding:14px;font-size:15px;" onclick="startGenerate()">🚀 开始生成（${productionConfig.quantity} 张）</button>
+                </div>
+                <div id="generate-results" style="display:none;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+                        <div style="font-weight:500;">生成结果</div>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn-secondary btn-sm" onclick="document.querySelectorAll('.result-check').forEach(cb=>cb.checked=true)">全选</button>
+                            <button class="btn-secondary btn-sm" onclick="alert('演示：下载选中')">⬇ 下载</button>
+                        </div>
+                    </div>
+                    <div class="result-grid" id="results-grid"></div>
+                </div>
+                <div class="generate-bar">
+                    <button class="btn-secondary" onclick="productionStep=3;renderProduction()">← 上一步</button>
+                    <button class="btn-primary" style="margin-left:auto;display:none;" id="next-to-audit" onclick="productionStep=5;renderProduction()">下一步：审核投放 →</button>
+                </div>
+            `;
+        }
+
+        function startGenerate() {
+            const statusDiv = document.getElementById('generate-status');
+            const resultsDiv = document.getElementById('generate-results');
+            const grid = document.getElementById('results-grid');
+            const nextBtn = document.getElementById('next-to-audit');
+
+            statusDiv.innerHTML = '<div class="generating"><div class="spinner"></div><span>AI 生成中... 正在调用生图引擎</span></div>';
+
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+                resultsDiv.style.display = 'block';
+                nextBtn.style.display = 'block';
+
+                const shuffled = [...GENERATED_RESULTS].sort(() => 0.5 - Math.random());
+                const selected = shuffled.slice(0, Math.min(productionConfig.quantity, 6));
+
+                grid.innerHTML = selected.map(r => `
+                    <div class="result-card">
+                        <div class="result-cover">${r.emoji}</div>
+                        <div style="position:absolute;top:8px;left:8px;">
+                            <span class="tag tag-blue" style="font-size:10px;">${r.style}</span>
+                        </div>
+                        <div style="position:absolute;top:8px;right:8px;">
+                            <input type="checkbox" class="result-check" checked>
+                        </div>
+                        <div class="result-actions">
+                            <button class="result-btn" onclick="alert('编辑')">编辑</button>
+                            <button class="result-btn" onclick="alert('下载')">下载</button>
+                            <button class="result-btn" onclick="alert('删除')">删除</button>
+                        </div>
+                    </div>
+                `).join('');
+            }, 2000);
+        }
+
+        function renderStepAudit() {
+            return `
+                <div class="card-title">审核与交付</div>
+                <p style="color:var(--text-secondary);margin-bottom:20px;font-size:13px;">素材需经业务团队审核通过后，方可交付投放</p>
+                <div class="card" style="background:#F9FAFB;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div>
+                            <div style="font-weight:500;margin-bottom:4px;">📤 提交审核</div>
+                            <div style="font-size:13px;color:var(--text-secondary);">将生成素材提交至投放团队负责人审核</div>
+                        </div>
+                        <button class="btn-primary" onclick="alert('演示：已提交审核')">提交审核</button>
+                    </div>
+                </div>
+                <div class="card" style="background:#F0FDF4;border:1px solid #BBF7D0;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:24px;">✅</span>
+                        <div>
+                            <div style="font-weight:500;color:#166534;">上一批次已完成交付</div>
+                            <div style="font-size:13px;color:#15803D;">2026-10-10 批次 · 6 张素材已通过审核并同步至投放平台</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="generate-bar">
+                    <button class="btn-secondary" onclick="productionStep=4;renderProduction()">← 上一步</button>
+                    <button class="btn-primary" style="margin-left:auto;" onclick="productionStep=1;productionConfig={channel:'',style:[],scenario:'',audience:'',copyTemplate:1,copyText:'',quantity:6};renderProduction()">🔄 开始新的生产任务</button>
+                </div>
+            `;
+        }
+
+        // 资产中心
+        function renderAssets() {
+            const content = document.getElementById('main-content');
+            const tabs = [
+                { id: 'video', name: '🎬 视频素材' },
+                { id: 'image', name: '🖼️ 图片素材' },
+                { id: 'brand', name: '🧅 品牌资产' },
+                { id: 'template', name: '📐 渠道模板' }
+            ];
+            const items = ASSET_DATA[assetTab] || [];
+
+            content.innerHTML = `
+                <div style="margin-bottom:24px;">
+                    <div style="font-size:22px;font-weight:600;margin-bottom:4px;">资产中心</div>
+                    <div style="color:var(--text-secondary);font-size:14px;">统一管理视频 / 图片 / 品牌资产 / 渠道模板，供生产流程调用</div>
+                </div>
+                <div class="asset-tabs">
+                    ${tabs.map(t => `<div class="asset-tab ${assetTab === t.id ? 'active' : ''}" onclick="assetTab='${t.id}';renderAssets()">${t.name}</div>`).join('')}
+                </div>
+                <div class="asset-grid">
+                    ${items.map(item => {
+                        let meta = '';
+                        if (assetTab === 'video') meta = `<div class="asset-tags">${item.tags.map(t=>`<span class="tag tag-gray" style="font-size:11px;">${t}</span>`).join('')}</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:6px;">${item.type} · ${item.duration}</div>`;
+                        else if (assetTab === 'image') meta = `<div class="asset-tags">${item.tags.map(t=>`<span class="tag tag-gray" style="font-size:11px;">${t}</span>`).join('')}</div><div style="font-size:12px;color:var(--text-tertiary);margin-top:6px;">风格：${item.style}</div>`;
+                        else if (assetTab === 'brand') meta = `<div class="asset-tags"><span class="tag tag-blue" style="font-size:11px;">${item.type}</span></div><div style="font-size:12px;color:var(--text-tertiary);margin-top:6px;">格式：${item.format}</div>`;
+                        else meta = `<div class="asset-tags"><span class="tag tag-orange" style="font-size:11px;">${item.channel}</span></div><div style="font-size:12px;color:var(--text-tertiary);margin-top:6px;">已使用 ${item.usage} 次</div>`;
+                        return `
+                            <div class="asset-card" onclick="alert('演示：查看资产详情 - ${item.name}')">
+                                <div class="asset-thumb">${assetTab === 'video' ? '🎬' : assetTab === 'image' ? '🖼️' : assetTab === 'brand' ? '🧅' : '📐'}</div>
+                                <div class="asset-info">
+                                    <div class="asset-name">${item.name}</div>
+                                    ${meta}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

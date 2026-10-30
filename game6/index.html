@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>game6 — 草原奔跑</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #7fb2e5; }
+    #app { position: fixed; inset: 0; }
+    canvas { display: block; }
+    #loading {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(#9fd0f0, #dff0fb); color: #234;
+      font-family: system-ui, sans-serif;
+    }
+    #bar { width: 340px; height: 8px; background: #ffffff88; border-radius: 4px; margin-top: 12px; overflow: hidden; }
+    #barfill { height: 100%; width: 0%; background: #3a7bd5; border-radius: 4px; transition: width .15s; }
+    #loadmsg { margin-top: 8px; font-size: 13px; }
+    #start {
+      position: fixed; inset: 0; z-index: 10; display: none;
+      flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(#9fd0f0cc, #dff0fbcc); color: #234;
+      font-family: system-ui, sans-serif; backdrop-filter: blur(3px);
+    }
+    #start h1 { font-size: 34px; margin: 0 0 8px; letter-spacing: 2px; }
+    #start p { font-size: 14px; opacity: .75; margin: 4px 0; }
+    #startbtn {
+      margin-top: 22px; padding: 14px 54px; font-size: 19px; letter-spacing: 4px;
+      color: #fff; background: #3a7bd5; border: none; border-radius: 999px; cursor: pointer;
+      box-shadow: 0 4px 16px #3a7bd566; transition: transform .15s;
+    }
+    #startbtn:hover { transform: scale(1.05); }
+    #hud {
+      position: fixed; left: 10px; top: 10px; z-index: 5; pointer-events: none;
+      color: #fff; text-shadow: 0 1px 2px #0009; font: 12px/1.7 system-ui, sans-serif; white-space: pre;
+    }
+    #errlog {
+      position: fixed; left: 10px; bottom: 10px; z-index: 5; max-width: 70vw;
+      color: #ff6666; text-shadow: 0 1px 2px #000; font: 12px/1.5 monospace; white-space: pre-wrap;
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/index-CN5XX_ly.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <div id="loading">
+    <div>正在加载资产…</div>
+    <div id="bar"><div id="barfill"></div></div>
+    <div id="loadmsg"></div>
+  </div>
+  <div id="start">
+    <h1>草原奔跑</h1>
+    <p>WASD 移动 · Shift 奔跑 · 空格 跳跃 / 按住滑翔 · Q 滑翔中翻滚 · E 互动</p>
+    <p>收集散落在草原上的发光花</p>
+    <button id="startbtn">开始游戏</button>
+  </div>
+  <div id="hud"></div>
+  <div id="errlog"></div>
+</body>
+</html>

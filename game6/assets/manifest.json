@@ -1,0 +1,894 @@
+{
+ "source": "game6.blend (Blender 4.4.3, Eevee Next, 407 objects)",
+ "generated_by": "Blender headless export pipeline",
+ "files": {
+  "character.glb": {
+   "size": 2505148,
+   "objects": [
+    "RUN.001",
+    "Sphere.011",
+    "LineArt_baked_LineArt.006",
+    "Cube.021"
+   ],
+   "materials": [
+    "A",
+    "B",
+    "Black.004",
+    "C",
+    "D",
+    "E",
+    "Material.017",
+    "Material.018"
+   ],
+   "active_actions_of_objects": [
+    "DIVE|Take 001|BaseLayer"
+   ]
+  },
+  "sheep.glb": {
+   "size": 2241024,
+   "objects": [
+    "球体.001",
+    "Sphere.003",
+    "Sphere.004",
+    "Sphere.008",
+    "Sphere.010",
+    "Sphere.012",
+    "Sphere.006",
+    "Sphere.001",
+    "Sphere.013",
+    "Sphere.014",
+    "Sphere.017",
+    "Sphere.018",
+    "Sphere.005",
+    "Sphere.007",
+    "Sphere.015",
+    "球体.002",
+    "LineArt_baked_LineArt.004",
+    "Cube.001"
+   ],
+   "materials": [
+    "Black.006",
+    "Material",
+    "Material.002",
+    "Material.003",
+    "Material.009",
+    "Material.011",
+    "材质.002",
+    "材质.003"
+   ],
+   "active_actions_of_objects": [
+    "Sphere.013Action"
+   ]
+  },
+  "clouds.glb": {
+   "size": 380236,
+   "objects": [
+    "Cube.002",
+    "Cube.003",
+    "LineArt_baked_LineArt.003",
+    "Cube.040",
+    "Cube.009"
+   ],
+   "materials": [
+    "Black.005",
+    "Material.001",
+    "big yun"
+   ],
+   "active_actions_of_objects": [
+    "Cube.002Action.001"
+   ]
+  },
+  "vegetation.glb": {
+   "size": 43313976,
+   "objects": [
+    "Plane.002",
+    "Plane.003",
+    "Plane.004",
+    "Plane.005",
+    "Plane.006",
+    "Plane.007",
+    "Plane.008",
+    "Plane.009",
+    "Plane.010",
+    "Plane.011",
+    "Plane.012",
+    "Plane.013",
+    "Plane.014",
+    "Plane.015",
+    "Plane.016",
+    "Plane.017",
+    "Plane.018",
+    "Plane.019",
+    "Plane.020",
+    "Plane.021",
+    "Plane.022",
+    "Plane.023",
+    "Plane.024",
+    "Plane.025",
+    "Plane.026",
+    "Plane.027",
+    "Plane.029",
+    "Plane.028",
+    "Plane.030",
+    "Plane.031",
+    "Plane.032",
+    "Plane.033",
+    "Plane.034",
+    "Plane.035",
+    "Plane.036",
+    "Plane.037",
+    "Plane.038",
+    "Plane.039",
+    "Plane.040",
+    "Plane.041",
+    "Plane.042",
+    "Plane.043",
+    "Plane.044",
+    "Plane.045",
+    "Plane.046",
+    "Plane.047",
+    "Plane.048",
+    "Plane.049",
+    "Plane.050",
+    "Plane.051",
+    "Plane.052",
+    "Plane.053",
+    "Plane.054",
+    "Plane.055",
+    "Plane.056",
+    "Plane.057",
+    "Plane.058",
+    "Plane.059",
+    "Plane.060",
+    "Plane.061",
+    "Plane.062",
+    "Plane.063",
+    "Plane.064",
+    "Plane.065",
+    "Point.002",
+    "Plane.066",
+    "Plane.067",
+    "Plane.068",
+    "Plane.069",
+    "Plane.070",
+    "Point.003",
+    "Point.004",
+    "Point.005",
+    "Point.006",
+    "Plane.071",
+    "Plane.072",
+    "Plane.073",
+    "Plane.074",
+    "Point.007",
+    "Plane.075",
+    "Point.008",
+    "Plane.076",
+    "Plane.077",
+    "Plane.078",
+    "Plane.079",
+    "Plane.080",
+    "Plane.081",
+    "Plane.082",
+    "Plane.083",
+    "Plane.084",
+    "Plane.085",
+    "Point.009",
+    "Point.010",
+    "Plane.086",
+    "Plane.087",
+    "Plane.088",
+    "Plane.089",
+    "Plane.090",
+    "Plane.091",
+    "Plane.092",
+    "Plane.093",
+    "Plane.094",
+    "Plane.095",
+    "Point.011",
+    "Point.012",
+    "Plane.096",
+    "Plane.097",
+    "Plane.098",
+    "Plane.099",
+    "Point.013",
+    "Plane.100",
+    "Plane.101",
+    "Plane.102",
+    "Plane.103",
+    "Plane.104",
+    "Plane.105",
+    "Point.014",
+    "Point.015",
+    "Point.016",
+    "Plane.106",
+    "Plane.107",
+    "Plane.108",
+    "Point.017",
+    "Point.018",
+    "Point.019",
+    "Plane.109",
+    "Point.020",
+    "Plane.110",
+    "Plane.111",
+    "Point.021",
+    "Plane.112",
+    "Plane.113",
+    "Plane.114",
+    "Plane.115",
+    "Plane.116",
+    "Plane.117",
+    "Point.022",
+    "Point.023",
+    "Point.024",
+    "Point.025",
+    "Plane.119",
+    "Plane.120",
+    "Plane.121",
+    "Plane.122",
+    "Plane.123",
+    "Plane.124",
+    "Plane.125",
+    "Plane.126",
+    "Plane.127",
+    "Plane.128",
+    "Plane.129",
+    "Plane.130",
+    "Plane.131",
+    "Plane.132",
+    "Plane.133",
+    "Plane.134",
+    "Plane.135",
+    "Plane.136",
+    "Plane.137",
+    "Plane.138",
+    "Plane.139",
+    "Plane.140",
+    "Plane.141",
+    "Plane.142",
+    "Plane.143",
+    "Plane.144",
+    "Plane.145",
+    "Plane.146",
+    "Plane.147",
+    "Plane.148",
+    "Plane.149",
+    "Plane.150",
+    "Plane.151",
+    "Plane.152",
+    "Plane.153",
+    "Plane.154",
+    "Plane.155",
+    "Plane.156",
+    "Plane.157",
+    "Plane.158",
+    "Plane.159",
+    "Plane.160",
+    "Plane.161",
+    "Plane.162",
+    "Plane.163",
+    "Plane.164",
+    "Plane.165",
+    "Plane.166",
+    "Plane.167",
+    "Plane.168",
+    "Plane.169",
+    "Point.026",
+    "Point.027",
+    "Point.028",
+    "Point.029",
+    "Plane.118",
+    "Plane.170",
+    "Plane.171",
+    "Plane.172",
+    "Plane.173",
+    "Plane.174",
+    "Plane.175",
+    "Plane.176",
+    "Plane.177",
+    "Plane.178",
+    "Plane.179",
+    "Plane.180",
+    "Plane.181",
+    "Plane.182",
+    "Plane.183",
+    "Plane.185",
+    "Plane.186",
+    "Plane.187",
+    "Plane.188",
+    "Plane.189",
+    "Plane.190",
+    "Plane.191",
+    "Plane.192",
+    "Plane.193",
+    "Plane.194",
+    "Plane.195",
+    "Plane.196",
+    "Plane.197",
+    "Plane.198",
+    "Point.030",
+    "Plane.199",
+    "Plane.200",
+    "Plane.201",
+    "Plane.202",
+    "Plane.203",
+    "Plane.204",
+    "Plane.205",
+    "Plane.206",
+    "Plane.207",
+    "Plane.208",
+    "Plane.209",
+    "Plane.210",
+    "Plane.211",
+    "Plane.212",
+    "Plane.213",
+    "Plane.214",
+    "Plane.215",
+    "Plane.216",
+    "Plane.217",
+    "Plane.218",
+    "Plane.220",
+    "Plane.221",
+    "Plane.222",
+    "Plane.224",
+    "Point.031",
+    "Plane.223",
+    "Plane.225",
+    "Plane.227",
+    "Plane.228",
+    "Point.032",
+    "Plane.219",
+    "Point.033",
+    "Plane.226",
+    "Plane.229",
+    "Plane.230",
+    "Plane.231",
+    "Plane.232",
+    "Plane.233",
+    "Plane.234",
+    "Plane.235",
+    "Plane.236",
+    "Plane.237",
+    "Plane.238",
+    "Plane.239",
+    "Point.034",
+    "Plane.240",
+    "Plane.241",
+    "Plane.242",
+    "Plane.243",
+    "Point.035",
+    "Plane.244",
+    "Plane.245",
+    "Plane.246",
+    "Plane.247",
+    "Plane.248",
+    "Plane.249",
+    "Plane.250",
+    "Plane.251",
+    "Point.036",
+    "Point.037",
+    "Point.038",
+    "Point.039",
+    "Point.040",
+    "Plane.252",
+    "Plane.253",
+    "Plane.254",
+    "Plane.255",
+    "Plane.256",
+    "Point.041",
+    "Plane.257",
+    "Plane.184",
+    "Plane.258",
+    "Plane.259",
+    "Plane.260",
+    "Point.042",
+    "Point.043",
+    "Plane.261",
+    "Plane.262",
+    "Plane.263",
+    "Point.046",
+    "LineArt_baked_LineArt.002",
+    "LineArt_baked_LineArt.008",
+    "Plane",
+    "Plane.001",
+    "GrassBaked_Plane",
+    "GrassBaked_Plane.001"
+   ],
+   "materials": [
+    "Black.008",
+    "C",
+    "C.001",
+    "Material.005",
+    "Material.024",
+    "Material.025"
+   ],
+   "active_actions_of_objects": [
+    "Point.026Action"
+   ]
+  },
+  "environment.glb": {
+   "size": 20129284,
+   "objects": [
+    "Cube",
+    "Cube.023",
+    "Cube.038",
+    "Cube.039",
+    "LineArt_baked_LineArt",
+    "Cube.004",
+    "Cube.005",
+    "Cube.006",
+    "Cube.008",
+    "Cube.010",
+    "Cube.011",
+    "Cube.012",
+    "Cube.024",
+    "Cube.027",
+    "Cube.028",
+    "Cube.029",
+    "Cube.030",
+    "Cube.031",
+    "Cube.032",
+    "Cube.033",
+    "Cube.034",
+    "Cube.035",
+    "LineArt_baked_LineArt.001",
+    "Cube.020",
+    "Cube.016",
+    "Cube.013",
+    "Cube.018",
+    "Cube.036",
+    "Cube.037",
+    "LineArt_baked_LineArt.009",
+    "Cylinder.004",
+    "Cylinder.005",
+    "Sphere",
+    "Sphere.002",
+    "Sphere.009",
+    "Sphere.016",
+    "Sphere.019",
+    "Sphere.020",
+    "Sphere.021",
+    "Empty",
+    "Turbulence",
+    "Empty.001",
+    "Cube.022",
+    "Cylinder.001",
+    "Cube.015",
+    "Cube.025",
+    "Cube.026",
+    "Cone.001",
+    "Cone.002",
+    "Cone.003",
+    "Cone.006",
+    "Cone.007"
+   ],
+   "materials": [
+    "Black.001",
+    "Black.002",
+    "Black.009",
+    "Material",
+    "Material.002",
+    "Material.006",
+    "Material.009",
+    "Material.013",
+    "Material.014",
+    "Material.016",
+    "Material.019",
+    "Material.020",
+    "Material.021",
+    "Material.022",
+    "Material.023",
+    "Material.026",
+    "材质.003"
+   ],
+   "active_actions_of_objects": [
+    "Cube.023Action",
+    "Cube.034Action",
+    "Cube.038Action",
+    "Cube.039Action",
+    "Empty.001Action",
+    "EmptyAction",
+    "Sphere.016Action.002",
+    "Sphere.019Action.002",
+    "Sphere.020Action",
+    "Sphere.021Action",
+    "TurbulenceAction"
+   ]
+  },
+  "lights_camera.glb": {
+   "size": 27100,
+   "objects": [
+    "Area",
+    "CAMERA",
+    "Point",
+    "Point.001",
+    "Point.002",
+    "Point.003",
+    "Point.004",
+    "Point.005",
+    "Point.006",
+    "Point.007",
+    "Point.008",
+    "Point.009",
+    "Point.010",
+    "Point.011",
+    "Point.012",
+    "Point.013",
+    "Point.014",
+    "Point.015",
+    "Point.016",
+    "Point.017",
+    "Point.018",
+    "Point.019",
+    "Point.020",
+    "Point.021",
+    "Point.022",
+    "Point.023",
+    "Point.024",
+    "Point.025",
+    "Point.026",
+    "Point.027",
+    "Point.028",
+    "Point.029",
+    "Point.030",
+    "Point.031",
+    "Point.032",
+    "Point.033",
+    "Point.034",
+    "Point.035",
+    "Point.036",
+    "Point.037",
+    "Point.038",
+    "Point.039",
+    "Point.040",
+    "Point.041",
+    "Point.042",
+    "Point.043",
+    "Point.044",
+    "Point.045",
+    "Point.046",
+    "Sun",
+    "Sun.001"
+   ],
+   "materials": [],
+   "active_actions_of_objects": [
+    "AreaAction",
+    "CAMERA|Take 001|BaseLayer",
+    "Point.026Action"
+   ]
+  },
+  "sky_pano.png": {
+   "size": 2959,
+   "content": "等距柱状天空贴图 1024x512（按世界色带重建的垂直渐变；源节点 Generated 坐标无效导致 Eevee 渲染为纯色，详见 known_issues），用 THREE.EquirectangularReflectionMapping 作为 scene.background/environment"
+  },
+  "environment.json": {
+   "content": "渲染设置(1920x810@24fps, 帧1001-1126)、世界渐变参数、Turbulence 湍流风场参数"
+  },
+  "lineart.json": {
+   "content": "11 个 LineArt GP 的原始修改器参数与烘焙结果记录"
+  }
+ },
+ "animations": [
+  {
+   "name": "AreaAction",
+   "frame_range": [
+    995.0,
+    1135.0
+   ],
+   "seconds_at_24fps": [
+    41.46,
+    47.29
+   ]
+  },
+  {
+   "name": "CAMERA|Take 001|BaseLayer",
+   "frame_range": [
+    1001.0,
+    1126.0
+   ],
+   "seconds_at_24fps": [
+    41.71,
+    46.92
+   ]
+  },
+  {
+   "name": "Cone.004Action",
+   "frame_range": [
+    1127.0,
+    1127.0
+   ],
+   "seconds_at_24fps": [
+    46.96,
+    46.96
+   ]
+  },
+  {
+   "name": "Cone.005Action",
+   "frame_range": [
+    1127.0,
+    1127.0
+   ],
+   "seconds_at_24fps": [
+    46.96,
+    46.96
+   ]
+  },
+  {
+   "name": "Cube.002Action.001",
+   "frame_range": [
+    1060.0,
+    1124.0
+   ],
+   "seconds_at_24fps": [
+    44.17,
+    46.83
+   ]
+  },
+  {
+   "name": "Cube.014Action",
+   "frame_range": [
+    1127.0,
+    1127.0
+   ],
+   "seconds_at_24fps": [
+    46.96,
+    46.96
+   ]
+  },
+  {
+   "name": "Cube.023Action",
+   "frame_range": [
+    1045.0,
+    1127.0
+   ],
+   "seconds_at_24fps": [
+    43.54,
+    46.96
+   ]
+  },
+  {
+   "name": "Cube.034Action",
+   "frame_range": [
+    1014.0,
+    1014.0
+   ],
+   "seconds_at_24fps": [
+    42.25,
+    42.25
+   ]
+  },
+  {
+   "name": "Cube.038Action",
+   "frame_range": [
+    1020.0,
+    1060.0
+   ],
+   "seconds_at_24fps": [
+    42.5,
+    44.17
+   ]
+  },
+  {
+   "name": "Cube.039Action",
+   "frame_range": [
+    1025.0,
+    1042.0
+   ],
+   "seconds_at_24fps": [
+    42.71,
+    43.42
+   ]
+  },
+  {
+   "name": "DIVE|Take 001|BaseLayer",
+   "frame_range": [
+    970.0,
+    1127.0
+   ],
+   "seconds_at_24fps": [
+    40.42,
+    46.96
+   ]
+  },
+  {
+   "name": "DIVE|Take 001|BaseLayer.001",
+   "frame_range": [
+    970.0,
+    1126.0
+   ],
+   "seconds_at_24fps": [
+    40.42,
+    46.92
+   ]
+  },
+  {
+   "name": "Empty.001Action",
+   "frame_range": [
+    1001.0,
+    1126.0
+   ],
+   "seconds_at_24fps": [
+    41.71,
+    46.92
+   ]
+  },
+  {
+   "name": "EmptyAction",
+   "frame_range": [
+    1002.0,
+    1125.0
+   ],
+   "seconds_at_24fps": [
+    41.75,
+    46.88
+   ]
+  },
+  {
+   "name": "KeyAction",
+   "frame_range": [
+    1040.0,
+    1080.0
+   ],
+   "seconds_at_24fps": [
+    43.33,
+    45.0
+   ]
+  },
+  {
+   "name": "Point.026Action",
+   "frame_range": [
+    1007.0,
+    1007.0
+   ],
+   "seconds_at_24fps": [
+    41.96,
+    41.96
+   ]
+  },
+  {
+   "name": "Sphere.013Action",
+   "frame_range": [
+    1127.0,
+    1127.0
+   ],
+   "seconds_at_24fps": [
+    46.96,
+    46.96
+   ]
+  },
+  {
+   "name": "Sphere.016Action.002",
+   "frame_range": [
+    1001.0,
+    1010.0
+   ],
+   "seconds_at_24fps": [
+    41.71,
+    42.08
+   ]
+  },
+  {
+   "name": "Sphere.019Action.002",
+   "frame_range": [
+    1001.0,
+    1010.0
+   ],
+   "seconds_at_24fps": [
+    41.71,
+    42.08
+   ]
+  },
+  {
+   "name": "Sphere.020Action",
+   "frame_range": [
+    1115.0,
+    1122.0
+   ],
+   "seconds_at_24fps": [
+    46.46,
+    46.75
+   ]
+  },
+  {
+   "name": "Sphere.021Action",
+   "frame_range": [
+    1115.0,
+    1122.0
+   ],
+   "seconds_at_24fps": [
+    46.46,
+    46.75
+   ]
+  },
+  {
+   "name": "TurbulenceAction",
+   "frame_range": [
+    1000.0,
+    1110.0
+   ],
+   "seconds_at_24fps": [
+    41.67,
+    46.25
+   ]
+  }
+ ],
+ "skeletons": {
+  "RUN.001": {
+   "bones": [
+    "root",
+    "Hips",
+    "Spine",
+    "Spine1",
+    "Spine2",
+    "Neck",
+    "Head",
+    "HeadTop_End",
+    "earB.L",
+    "earA.L",
+    "earB.R",
+    "earA.R",
+    "LeftShoulder",
+    "LeftArm",
+    "LeftForeArm",
+    "LeftHand",
+    "LeftHandThumb1",
+    "LeftHandThumb2",
+    "LeftHandThumb3",
+    "LeftHandThumb4",
+    "LeftHandIndex1",
+    "LeftHandIndex2",
+    "LeftHandIndex3",
+    "LeftHandMiddle1",
+    "LeftHandMiddle2",
+    "LeftHandMiddle3",
+    "LeftHandRing1",
+    "LeftHandRing2",
+    "LeftHandRing3",
+    "LeftHandPinky1",
+    "LeftHandPinky2",
+    "LeftHandPinky3",
+    "RightShoulder",
+    "RightArm",
+    "RightForeArm",
+    "RightHand",
+    "RightHandThumb1",
+    "RightHandThumb2",
+    "RightHandThumb3",
+    "RightHandThumb4",
+    "RightHandIndex1",
+    "RightHandIndex2",
+    "RightHandIndex3",
+    "RightHandMiddle1",
+    "RightHandMiddle2",
+    "RightHandMiddle3",
+    "RightHandRing1",
+    "RightHandRing2",
+    "RightHandRing3",
+    "RightHandPinky1",
+    "RightHandPinky2",
+    "RightHandPinky3",
+    "LeftUpLeg",
+    "LeftLeg",
+    "LeftFoot",
+    "LeftToeBase",
+    "LeftToe_End",
+    "RightUpLeg",
+    "RightLeg",
+    "RightFoot",
+    "RightToeBase",
+    "RightToe_End"
+   ],
+   "bone_count": 62
+  }
+ },
+ "known_issues": [
+  "RUN 骨骼（66骨，Collection 集合）是孤儿副本（无子物体、无使用者），未导出；角色动画以 PERSON 集合的 RUN.001（62骨）为准。",
+  "Cube.007、Cube.019 在源文件中 hide_render=True，未导出。",
+  "NOTHING 集合（Cone.004/Cone.005/Cube.014/Cube.017）为远离场景(y≈-27)的辅助/测试对象（仅含单帧占位 Action），已排除。",
+  "11 个 GreasePencil LineArt 中 8 个已烘焙为静态网格（LineArt_baked_*），不再具有视图相关描边特性；剩余 3 个（Cube_SurfaceDrawing、LineArt.005、LineArt.007）在源文件中求值笔画数为 0（空对象，Eevee 渲染同样无笔画），无法烘焙，参数已在 lineart.json 留档。Three.js 中如需视图相关描边可改用 OutlinePass/背面外扩法。",
+  "草地按视口密度烘焙：每个发射器 2500 根父发 + 25000 根子发(渲染密度的10%)，共约 5.5 万根草叶管状网格。若需更高密度，建议 Three.js 端用 InstancedMesh 加密，或回 Blender 调高 child_percent 后重新烘焙。",
+  "Cube.021（角色身体）的 MIRROR/SUBSURF 修改器已按渲染级烘焙进网格（含全部 149 个顶点组权重与 Basis/Key 1 形态键，形态键动画 KeyAction 已保留）；导出为细分后网格。",
+  "灯光按原样导出 47 个点光；Three.js 中建议合并为 5-8 个光源，其余用光照贴图/发光材质替代。",
+  "46 个材质均为程序化节点材质，无外部贴图；glTF 仅导出基础色/PBR 近似参数，复杂程序化效果需在 Three.js 端重建。",
+  "源世界渐变节点使用 Generated 坐标（世界着色器中无效），Eevee 实渲染为纯色天空；sky_pano.png 按色带两端色（青->浅蓝）重建为 1024x512 等距柱状垂直渐变（linear->sRGB 已转换），纯色参考值见 environment.json。Three.js 中以 EquirectangularReflectionMapping 使用。"
+ ]
+}

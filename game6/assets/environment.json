@@ -1,0 +1,69 @@
+{
+ "render": {
+  "engine": "BLENDER_EEVEE_NEXT",
+  "fps": 24,
+  "frame_start": 1001,
+  "frame_end": 1126,
+  "resolution": [
+   1920,
+   810
+  ],
+  "unit_scale": 1.0
+ },
+ "world": {
+  "name": "World.001",
+  "gradient_ramp": [
+   {
+    "position": 0.0127,
+    "color": [
+     0.13053,
+     0.85209,
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "position": 1.0,
+    "color": [
+     0.45171,
+     0.65266,
+     0.98771,
+     1.0
+    ]
+   }
+  ],
+  "background_node_colors": [
+   [
+    0.1996,
+    0.48275,
+    0.92906,
+    1.0
+   ]
+  ],
+  "baked_texture": "sky_pano.png",
+  "note": "源世界节点用 Texture Coordinate.Generated 驱动渐变，该坐标在世界着色器中无效，Eevee 实际渲染为纯色 (0.378, 0.564, 0.883)（线性空间）。sky_pano.png 按色带参数重建为等距柱状垂直渐变（地平线=色带下端青色，天顶=上端浅蓝，已做 linear->sRGB 转换），方向约定：垂直轴。若需与源渲染完全一致的纯色天空，使用上述常量色。",
+  "eevee_rendered_flat_color_linear": [
+   0.37799,
+   0.56433,
+   0.88283
+  ]
+ },
+ "turbulence": {
+  "object": "Turbulence",
+  "location": [
+   -0.2505,
+   0.1061,
+   1.942
+  ],
+  "field_type": "TURBULENCE",
+  "strength": 1.0,
+  "noise": 0.0,
+  "seed": 55,
+  "flow": 0.0,
+  "apply_to_location": true,
+  "apply_to_rotation": true,
+  "use_max_distance": false,
+  "distance_max": null,
+  "note": "湍流风场，作用于粒子/毛发。Three.js 中可用简单噪声位移模拟草地摆动。"
+ }
+}

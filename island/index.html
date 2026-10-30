@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MŒBIUS ISLE — 3D 开放场景 · 项目一</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #9cc6c0; }
+  canvas { display: block; cursor: grab; }
+  canvas.dragging { cursor: grabbing; }
+  #hud {
+    position: fixed; left: 22px; bottom: 22px; max-width: 340px;
+    padding: 14px 18px 12px; background: #f6e8c6; color: #1b1730;
+    border: 2px solid #1b1730; box-shadow: 5px 5px 0 #1b1730;
+    font: 12px/1.55 "Futura", "Avenir Next", "PingFang SC", "Helvetica Neue", sans-serif;
+    letter-spacing: .04em; user-select: none; transition: opacity .3s;
+  }
+  #hud h1 { margin: 0 0 2px; font-size: 18px; letter-spacing: .22em; font-weight: 700; }
+  #hud .sub { margin: 0 0 10px; font-size: 11px; opacity: .7; letter-spacing: .12em; }
+  #hud kbd {
+    display: inline-block; min-width: 14px; padding: 0 4px; margin: 0 1px;
+    border: 1.5px solid #1b1730; border-radius: 2px; background: #fbf3dc;
+    font: 600 10px/16px "Futura", "Avenir Next", sans-serif; text-align: center;
+  }
+  #hud .row { display: flex; justify-content: space-between; gap: 12px; }
+  #hud.hidden { opacity: 0; pointer-events: none; }
+  #stars {
+    position: fixed; left: 22px; top: 18px; user-select: none;
+    padding: 10px 14px 12px; background: #f6e8c6; color: #1b1730;
+    border: 2px solid #1b1730; box-shadow: 5px 5px 0 #1b1730;
+    font: 12px/1.4 "Futura", "Avenir Next", "PingFang SC", sans-serif;
+    letter-spacing: .14em;
+  }
+  #stars .cap { font-size: 10px; letter-spacing: .25em; opacity: .65; margin-bottom: 6px; }
+  #stars .bar { display: flex; gap: 7px; align-items: center; }
+  #star-bar { display: flex; gap: 7px; }
+  #stars .bar i {
+    width: 20px; height: 20px; display: block;
+    border: 2px solid #1b1730; background: #fbf3dc;
+    clip-path: polygon(50% 0, 61.5% 35%, 100% 35%, 68.5% 57%, 80% 100%, 50% 74%, 20% 100%, 31.5% 57%, 0 35%, 38.5% 35%);
+    transition: background .18s, transform .18s;
+  }
+  #stars .bar i.on { background: #e8a83c; transform: scale(1.12); }
+  #stars .num { margin-left: 4px; font-weight: 700; font-size: 14px; }
+  #star-msg {
+    position: fixed; left: 50%; top: 42%; transform: translate(-50%, -50%) scale(.9);
+    padding: 16px 26px; background: #f6e8c6; color: #1b1730; border: 3px solid #1b1730;
+    box-shadow: 8px 8px 0 #1b1730; font: 700 20px/1 "Futura", "Avenir Next", "PingFang SC", sans-serif;
+    letter-spacing: .2em; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .4s, transform .4s;
+  }
+  #star-msg.shown { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  @media (max-width: 640px) {
+    #hud { left: 10px; right: 10px; bottom: 10px; max-width: none; font-size: 11px; padding: 10px 12px; }
+    #hud .row { display: none; }
+    #hud .sub::after { content: " · 拖动环视 / WASD 带小球走 / 收集四角星"; }
+  }
+  #loc {
+    position: fixed; right: 22px; top: 18px; color: #1b1730;
+    font: 600 11px/1 "Futura", "Avenir Next", sans-serif; letter-spacing: .25em;
+    background: #f6e8c6; border: 2px solid #1b1730; padding: 7px 10px;
+  }
+  #back-home {
+    position: fixed; right: 22px; top: 52px; z-index: 10;
+    color: #1b1730; text-decoration: none;
+    font: 600 11px/1 "Futura", "Avenir Next", "PingFang SC", sans-serif; letter-spacing: .12em;
+    background: #f6e8c6; border: 2px solid #1b1730; padding: 7px 10px;
+    box-shadow: 3px 3px 0 #1b1730; transition: transform .15s, box-shadow .15s;
+  }
+  #back-home:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #1b1730; }
+  #back-home:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 #1b1730; }
+  @media (max-width: 640px) {
+    #stars { left: 10px; top: 10px; padding: 8px 10px; }
+    #stars .bar i { width: 15px; height: 15px; }
+    #loc { top: auto; bottom: 104px; right: 10px; font-size: 10px; }
+    #back-home { top: auto; bottom: 140px; right: 10px; font-size: 10px; }
+    #star-msg { font-size: 16px; padding: 12px 18px; }
+  }
+</style>
+</head>
+<body>
+<div id="stars">
+  <div class="cap">FOUR-POINTED STARS</div>
+  <div class="bar"><span id="star-bar"></span><span class="num" id="star-num">0/5</span></div>
+</div>
+<div id="star-msg">全部收集完成 ✦</div>
+<div id="hud">
+  <h1>MŒBIUS ISLE</h1>
+  <p class="sub">小球与四角星 · 场景与建筑研究</p>
+  <div class="row"><span>环视镜头</span><span>拖动鼠标</span></div>
+  <div class="row"><span>小球移动</span><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></div>
+  <div class="row"><span>奔跑</span><span><kbd>Shift</kbd></span></div>
+  <div class="row"><span>远近</span><span>滚轮</span></div>
+  <div class="row"><span>自动环岛</span><span><kbd>G</kbd></span></div>
+  <div class="row"><span>静音</span><span><kbd>M</kbd></span></div>
+  <div class="row"><span>回到起点 / 面板</span><span><kbd>R</kbd> · <kbd>H</kbd></span></div>
+</div>
+<div id="loc">OPEN SEA</div>
+<a id="back-home" href="/" target="_top" title="返回个人网站">← 返回网站</a>
+<script type="importmap">{ "imports": { "three": "/island/lib/three.module.js" } }</script>
+<script type="module" src="/island/main.js?v=9"></script>
+</body>
+</html>

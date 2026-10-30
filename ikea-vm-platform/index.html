@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IKEA VM 施工效果图生图平台</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800 h-screen flex flex-col overflow-hidden">
+  <!-- 顶部 -->
+  <header class="h-16 bg-white border-b flex items-center justify-between px-6 shrink-0">
+    <div class="flex items-center gap-4">
+      <div class="ikea-logo">IKEA</div>
+      <div>
+        <h1 class="font-bold text-lg text-ikea-blue leading-tight">VM 施工效果图生图平台</h1>
+        <p class="text-xs text-gray-500">陈列协作台 · 本地规则 + 效果图合成</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <div id="project-id" class="text-xs font-mono text-gray-400">未创建项目</div>
+      <select id="role-select" class="text-sm border rounded px-2 py-1 bg-white">
+        <option value="designer">设计师</option>
+        <option value="designManager">设计管理</option>
+        <option value="sales">销售</option>
+        <option value="salesManager">销售管理</option>
+        <option value="coordinator">现场协调</option>
+      </select>
+      <button id="btn-new-project" class="bg-ikea-blue text-white text-sm px-4 py-2 rounded hover:bg-blue-800 transition">新建项目</button>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- 左侧流程 -->
+    <aside class="w-64 bg-white border-r overflow-y-auto shrink-0">
+      <nav id="steps-nav" class="p-4 space-y-1">
+        <!-- JS 填充 -->
+      </nav>
+    </aside>
+
+    <!-- 中央工作区 -->
+    <main id="workspace" class="flex-1 overflow-y-auto p-8">
+      <div id="step-content" class="max-w-4xl mx-auto bg-white rounded-xl shadow-sm border p-6">
+        <!-- JS 填充 -->
+      </div>
+    </main>
+
+    <!-- 右侧上下文 -->
+    <aside class="w-80 bg-white border-l overflow-y-auto shrink-0 p-5">
+      <h3 class="font-bold text-sm text-gray-700 mb-3">项目上下文</h3>
+      <div id="context-panel" class="space-y-4 text-sm">
+        <!-- JS 填充 -->
+      </div>
+      <h3 class="font-bold text-sm text-gray-700 mt-6 mb-3">事件流</h3>
+      <div id="events-panel" class="space-y-2 text-xs text-gray-600 max-h-64 overflow-y-auto">
+        <!-- JS 填充 -->
+      </div>
+    </aside>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
